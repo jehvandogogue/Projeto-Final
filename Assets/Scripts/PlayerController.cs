@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,20 +21,18 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Morte"))  // Verifique se o jogador colidiu com a plataforma
         {
             lives--;  // Subtrai uma vida
-            Debug.Log("AAAAAAAAAAAAAAAAAAAA");
-            if (lives <= 0)
+            if (lives == 0)
             {
-                // Se o jogador não tiver mais vidas, você pode adicionar um código para game over aqui.
                 Debug.Log("Game Over");
-                // Neste exemplo, vamos apenas reiniciar o jogador.
-                ResetPlayer();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                SceneManager.LoadScene("GameOverScene");
             }
             else
             {
-                textoVidas.text = $"Vidas: {lives}";
                 ResetPlayer();
-                
             }
+            textoVidas.text = $"Vidas: {lives}";
         }
     }
 

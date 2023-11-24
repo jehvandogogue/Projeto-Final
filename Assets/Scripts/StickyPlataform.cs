@@ -9,6 +9,7 @@ public class StickyPlataform : MonoBehaviour
         if (colision.gameObject.tag =="Player")
         {
             colision.gameObject.transform.SetParent(transform);
+            colision.gameObject.transform.localScale = new Vector3(0.2f, 10f, 0.2f);
         }
     }
 
@@ -17,6 +18,7 @@ public class StickyPlataform : MonoBehaviour
         if (colision.gameObject.tag =="Player")
         {
             colision.gameObject.transform.SetParent(null);
+            colision.gameObject.transform.localScale = Vector3.one;
         }
     }
 }

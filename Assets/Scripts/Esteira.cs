@@ -16,6 +16,7 @@ public class Esteira : MonoBehaviour
     float curY; // O deslocamento Y atual da textura da correia transportadora
     float velocidadeAnimacao; // A velocidade da animação da correia transportadora
     Rigidbody rb;
+    bool colider = false;
 
     // Start é chamado antes do primeiro quadro
     void Start()
@@ -23,7 +24,7 @@ public class Esteira : MonoBehaviour
         rCorpo = GetComponent<Rigidbody>(); // Obter o componente rigidbody da correia transportadora
         curX = GetComponent<Renderer>().material.mainTextureOffset.x; // Obter o deslocamento X atual da textura da correia transportadora
         curY = GetComponent<Renderer>().material.mainTextureOffset.y; // Obter o deslocamento Y atual da textura da correia transportadora
-        velocidadeAnimacao = velocidade / 5; // Calcular a velocidade da animação da correia transportadora
+        velocidadeAnimacao = velocidade / 10; // Calcular a velocidade da animação da correia transportadora
         rb = Player.GetComponent<Rigidbody>();
     }
 
@@ -44,20 +45,39 @@ public class Esteira : MonoBehaviour
         if (SentidoX) // Se a correia transportadora deve animar na direção X
         {
             var forcaX = Vector3.left * velocidade * dt * (Inverter ? -1 : 1);
-            rCorpo.position +=  forcaX;// Mover a correia transportadora na direção X
-            //rb.AddForce(forcaX, ForceMode.Impulse);
-            curY += dt * velocidadeAnimacao; // Atualizar o deslocamento Y da textura da correia transportadora
+            rCorpo.position += forcaX;// Mover a correia transportadora na direção X
+
+            if (colider)
+                rb.transform.position -= forcaX;
+
+            curX += dt * velocidadeAnimacao * (Inverter? -1:1); // Atualizar o deslocamento Y da textura da correia transportadora
         }
         if (SentidoZ) // Se a correia transportadora deve animar na direção Z
         {
             var forcaZ = Vector3.back * velocidade * dt * (Inverter ? -1 : 1);
             rCorpo.position += forcaZ; // Mover a correia transportadora na direção Z
-            //rb.AddForce(forcaZ, ForceMode.Impulse);
-            curY += dt * velocidadeAnimacao; // Atualizar o deslocamento Y da textura da correia transportadora
+            curY += dt * velocidadeAnimacao * (Inverter ? -1 : 1); // Atualizar o deslocamento Y da textura da correia transportadora
+            if (colider)
+                rb.transform.position -= forcaZ;
         }
         rCorpo.MovePosition(pos); // Mover a correia transportadora para sua posição atual
 
         var nome = GetComponent<Renderer>().material.name; // Obter o nome do material usado pela correia transportadora
         GetComponent<Renderer>().material.mainTextureOffset = new Vector2(curX, curY); // Definir o deslocamento da textura da correia transportadora
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            colider = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            colider = false;
+        }
     }
 }

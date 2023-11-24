@@ -7,8 +7,14 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Start Screen.unity
+    guid: c48c32e21bcef2544a8acdeb28f4732f
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
     guid: b2ab89d6d1afd8e49aa5fa42cd60e955
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/FinishScene.unity
+    guid: 454a677b0c800ca41ad7c551e861b50f
   m_configObjects: {}
